@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mybatis_psql_board.member.dao.MemberMapper">
+
+    <!-- Member List -->
+    <select id="memberList" resultType="com.example.mybatis_psql_board.member.dto.MemberDto">
+        SELECT *
+        FROM members
+        Order by member_id
+    </select>
+
+    <!-- One row Select -->
+    <select id="memberListOne" resultType="com.example.mybatis_psql_board.member.dto.MemberDto">
+        SELECT *
+        FROM members
+        WHERE member_id = #{memberID}
+    </select>
+
+    <!-- One row from ID Select -->
+    <select id="memberLogin" resultType="com.example.mybatis_psql_board.member.dto.MemberDto">
+        SELECT *
+        FROM members
+        WHERE login_id = #{loginId}
+    </select>
+
+    <!-- 멤버 수정 -->
+    <update id="memberUpdate" parameterType="com.example.mybatis_psql_board.member.dto.MemberDto">
+        UPDATE members
+        SET name = #{name},
+            gender = #{gender}
+        WHERE member_id = #{memberId}
+    </update>
+
+    <!-- 멤버 삭제 -->
+    <delete id="memberDelete">
+        DELETE FROM members WHERE member_id = #{memberId}
+    </delete>
+
+    <!-- 멤버 등록 Insert -->
+    <insert id="memberInsert">
+        Insert into members(login_id, password, name, role, phone, gender, reg_day)
+        Values (#{loginId},#{password}, #{name} , #{role}, #{phone}, #{gender}, now())
+    </insert>
+</mapper>
